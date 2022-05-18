@@ -2,26 +2,27 @@ vim.api.nvim_exec(
   [[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.fs,*.c,*.py,*.rs,*.lua FormatWrite
+  autocmd BufWritePost *.dart,*.fs,*.c,*.py,*.rs,*.lua FormatWrite
 augroup END
 ]],
   true
 )
 require("formatter").setup({
   filetype = {
-    python = {
-      function()
-        return { exe = "black", args = { "-" }, stdin = true }
-      end,
-    },
-    rust = {
+    dart = {
       function()
         return {
-          exe = "rustfmt",
-          args = { "--edition=2021", "--emit=stdout" },
+          exe = "flutter",
+          args = { "format", vim.api.nvim_buf_get_name(0), "-o show" },
           stdin = true,
         }
       end,
+    },
+    python = {
+      require("formatter.filetypes.python").black,
+    },
+    rust = {
+      require("formatter.filetypes.rust").rustfmt,
     },
     c = {
       function()
@@ -29,7 +30,6 @@ require("formatter").setup({
           exe = "clang-format",
           args = { "--assume-filename=", vim.api.nvim_buf_get_name(0), "--style=microsoft" },
           stdin = true,
-          -- cwd = vim.fn.expand("%:p:h"),
         }
       end,
     },

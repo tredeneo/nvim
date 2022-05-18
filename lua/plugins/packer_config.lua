@@ -15,12 +15,24 @@ end
 -- vim.cmd 'packadd paq-nvim'
 return require("packer").startup({
   function()
-    use({ -- Speed up loading Lua modules in Neovim to improve startup time.
+    use({ -- melhorar velocidade de inicialização com JIT
       "lewis6991/impatient.nvim",
     })
 
+    use({ -- carregamento do LSP
+      "j-hui/fidget.nvim",
+      config = function()
+        require("fidget").setup()
+      end,
+    })
+    use({ -- mostrar numero da linha na inserção
+      "nkakouros-original/numbers.nvim",
+      config = function()
+        require("numbers").setup()
+      end,
+    })
     use("wbthomason/packer.nvim")
-    use({
+    use({ -- melhorar os focus quando tem varias janelas
       "beauwilliams/focus.nvim",
       config = function()
         require("plugins/focus_config")
@@ -29,15 +41,16 @@ return require("packer").startup({
     use( --parenteses coloridos
       "p00f/nvim-ts-rainbow"
     )
-    use({
+    use({ -- realçar pesquisa
       "m-demare/hlargs.nvim",
       requires = { "nvim-treesitter/nvim-treesitter" },
     })
     use({
       "haringsrob/nvim_context_vt",
     })
-    use({
+    use({ -- melhor aparencia dos fold(recolher blocos)
       "anuvyklack/pretty-fold.nvim",
+      requires = "anuvyklack/nvim-keymap-amend", -- only for preview
       config = function()
         require("plugins/pretty-fold_config")
       end,
@@ -48,7 +61,7 @@ return require("packer").startup({
     use({ -- simbolos no menu
       "onsails/lspkind-nvim",
     })
-    use({
+    use({ -- nem to usando
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
       config = function()
         require("plugins/lsp_lines_config")
@@ -73,7 +86,7 @@ return require("packer").startup({
         require("scrollbar").setup()
       end,
     })
-    use({
+    use({ -- mostrar metodos enquanto escreve
       "ray-x/lsp_signature.nvim",
       config = function()
         require("plugins/lsp_signature_config")
@@ -85,7 +98,7 @@ return require("packer").startup({
         require("plugins/indent-blankline_config")
       end,
     })
-    use({
+    use({ -- tema
       "projekt0n/github-nvim-theme",
       config = function()
         require("plugins/github-theme_config")
@@ -94,7 +107,7 @@ return require("packer").startup({
     use( --simbolos lsp pro tema
       "folke/lsp-colors.nvim"
     )
-    use({
+    use({ -- nem to usando
       "echasnovski/mini.nvim",
       branch = "stable",
       config = function()
@@ -108,7 +121,7 @@ return require("packer").startup({
       end,
     })
     use({ --mostrar marcas
-      "chentau/marks.nvim",
+      "chentoast/marks.nvim",
       config = function()
         require("marks").setup({})
       end,
@@ -119,13 +132,13 @@ return require("packer").startup({
         require("plugins/kommentary_config")
       end,
     })
-    use({
+    use({ -- nem to usando
       "ahmedkhalf/project.nvim",
       config = function()
         require("project_nvim").setup({})
       end,
     })
-    use({
+    use({ -- nem to usando
       "nvim-telescope/telescope-file-browser.nvim",
       config = function()
         require("telescope").load_extension("file_browser")
@@ -155,7 +168,7 @@ return require("packer").startup({
       end,
     })
 
-    use({
+    use({ -- executar arquivos
       "skywind3000/asyncrun.extra",
       ft = { "cpp", "c", "python", "rust", "go", "dart" },
       requires = {
@@ -186,7 +199,7 @@ return require("packer").startup({
         require("twilight").setup({})
       end,
     })
-    use({ --mostrar combinações de taclas possiveis
+    use({ --mostrar combinações de teclas possiveis
       "folke/which-key.nvim",
       config = function()
         require("which-key").setup({})
@@ -243,7 +256,7 @@ return require("packer").startup({
         require("plugins/flutter-tools_config")
       end,
     })
-    use({
+    use({ -- mostrar tipos no codigo
       "https://github.com/jubnzv/virtual-types.nvim",
     })
     use({ --rust
@@ -285,19 +298,19 @@ return require("packer").startup({
     --     require("plugins/navigator_config")
     --   end,
     -- })
-    use({
+    use({ -- melhorar interação com LSP
       "tami5/lspsaga.nvim",
       branch = "nvim6.0",
       config = function()
         require("plugins/lspsaga_config")
       end,
     })
-    use({ --tabs superiores
+    use({ --tabs/guias superiores, nem to usando teste
       "akinsho/bufferline.nvim",
       requires = "kyazdani42/nvim-web-devicons",
-      config = function()
-        require("plugins/bufferline_config")
-      end,
+      -- config = function()
+      --   require("plugins/bufferline_config")
+      -- end,
     })
     use({
       "neovim/nvim-lspconfig",

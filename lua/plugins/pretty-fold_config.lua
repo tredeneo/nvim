@@ -24,5 +24,6 @@ require("pretty-fold").setup({
   },
 })
 require("pretty-fold.preview").setup({
-  key = "l",
+	default_keybindings = false,
+	key = "l",
 })

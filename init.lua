@@ -33,7 +33,7 @@ vim.o.confirm = true
 vim.o.ignorecase = true
 vim.cmd("set clipboard+=unnamedplus")
 
----tabs configs
+---tabs/espaçamentos configs
 -- mostra TAB existente com 4 espaços
 vim.bo.tabstop = 4
 -- quando indentado com '>',usa 4 espaços
@@ -41,7 +41,7 @@ vim.bo.shiftwidth = 4
 -- quando apertar TAB, inseri 4 espaços
 vim.bo.expandtab = true
 
-vim.o.showtabline = 2
+-- vim.o.showtabline = 2
 ---n pedir pra salvar ao trocar de buffer
 vim.o.hidden = true
 vim.bo.iskeyword = "@,48-57,192-255"

@@ -15,7 +15,7 @@ require("lspconfig").clangd.setup({
 })
 
 require("lspconfig").pylsp.setup({
-  on_attach = require("aerial").on_attach,
+  -- on_attach = require("aerial").on_attach,
   settings = {
     pylsp = {
       filetype = { "python" },
