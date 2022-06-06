@@ -2,7 +2,7 @@ vim.api.nvim_exec(
   [[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.dart,*.fs,*.c,*.py,*.rs,*.lua FormatWrite
+  autocmd BufWritePost *.jsx,*.dart,*.fs,*.c,*.py,*.rs,*.lua FormatWrite
 augroup END
 ]],
   true
@@ -23,6 +23,9 @@ require("formatter").setup({
     },
     rust = {
       require("formatter.filetypes.rust").rustfmt,
+    },
+    javascriptreact = {
+      require("formatter.filetypes.javascriptreact").prettier,
     },
     c = {
       function()

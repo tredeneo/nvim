@@ -19,6 +19,18 @@ return require("packer").startup({
       "lewis6991/impatient.nvim",
     })
 
+    use({
+      "windwp/nvim-ts-autotag",
+      config = function()
+        require("nvim-ts-autotag").setup()
+      end,
+    })
+    use({
+      "lukas-reineke/lsp-format.nvim",
+      config = function()
+        require("plugins/lsp-format_config")
+      end,
+    })
     use({ -- carregamento do LSP
       "j-hui/fidget.nvim",
       config = function()
@@ -138,7 +150,7 @@ return require("packer").startup({
         require("project_nvim").setup({})
       end,
     })
-    use({ -- nem to usando
+    use({ -- integração telescope para procurar arquivos
       "nvim-telescope/telescope-file-browser.nvim",
       config = function()
         require("telescope").load_extension("file_browser")
@@ -162,7 +174,6 @@ return require("packer").startup({
     })
     use({ --formatador de arquivos
       "mhartington/formatter.nvim",
-      ft = { "fsharp", "rust", "python", "cpp", "c", "lua" },
       config = function()
         require("plugins/formatter_config")
       end,
@@ -170,7 +181,6 @@ return require("packer").startup({
 
     use({ -- executar arquivos
       "skywind3000/asyncrun.extra",
-      ft = { "cpp", "c", "python", "rust", "go", "dart" },
       requires = {
         { "skywind3000/asyncrun.vim" },
         { "voldikss/vim-floaterm" },
@@ -314,7 +324,7 @@ return require("packer").startup({
     })
     use({
       "neovim/nvim-lspconfig",
-      ft = { "haskell", "fsharp", "python", "cpp" },
+      -- ft = { "haskell", "fsharp", "python", "cpp" },
       config = function()
         require("plugins/lspconfig_config")
       end,
@@ -354,7 +364,7 @@ return require("packer").startup({
       "glepnir/dashboard-nvim",
     })
 
-    use({ --mostrar cores
+    use({ --mostrar cores hexa
       "norcalli/nvim-colorizer.lua",
       config = function()
         require("colorizer").setup()

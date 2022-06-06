@@ -1,4 +1,5 @@
 function executar_fecha()
+  print("vim.bo.filetype")
   if vim.bo.filetype == "python" then
     vim.api.nvim_command([[AsyncRun! -mode=term -pos=floaterm python3 %]])
   elseif vim.bo.filetype == "c" then
@@ -10,6 +11,8 @@ function executar_fecha()
   elseif vim.bo.filetype == "rust" then
     vim.api.nvim_command([[AsyncRun! -mode=term -pos=floaterm cargo run --manifest-path <root>/Cargo.toml]])
     -- vim.api.nvim_command([[AsyncRun! -mode=term -pos=floaterm cargo run --manifest-path <root>/Cargo.toml]])
+  elseif vim.bo.filetype == "nix" then
+    vim.api.nvim_command([[AsyncRun! -mode=term -pos=floaterm home-manager switch]])
   elseif vim.bo.filetype == "dart" then
     vim.api.nvim_command([[AsyncRun! -mode=term -pos=floaterm dart run %]])
   elseif vim.bo.filetype == "fsharp" then
