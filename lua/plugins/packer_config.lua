@@ -1,38 +1,35 @@
-local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({
-    "git",
-    "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
-  })
-end
+local fn = vim.fn 
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim" 
+if fn.empty(fn.glob(install_path)) > 0 then 
+	packer_bootstrap = fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path, }) 
+end 
+vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]]) 
 
----gerenciador
--- vim.cmd 'packadd paq-nvim'
-return require("packer").startup({
-  function()
-    use({ -- melhorar velocidade de inicialização com JIT
-      "lewis6991/impatient.nvim",
-    })
+--gerenciador vim.cmd 'packadd paq-nvim' 
+return require("packer").startup({ function() 
 
-    use({
-      "windwp/nvim-ts-autotag",
-      config = function()
-        require("nvim-ts-autotag").setup()
-      end,
+	use({ -- melhorar velocidade de inicialização com JIT
+	"lewis6991/impatient.nvim", }) 
+	use("tpope/vim-surround") 
+	use("alvan/vim-closetag") 
+
+    use({ --arvore de arquivos
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v2.x",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
+      },
     })
-    use({
+    use{
       "lukas-reineke/lsp-format.nvim",
       config = function()
         require("plugins/lsp-format_config")
       end,
-    })
+    }
     use({ -- carregamento do LSP
-      "j-hui/fidget.nvim",
+    "j-hui/fidget.nvim",
       config = function()
         require("fidget").setup()
       end,
@@ -53,7 +50,7 @@ return require("packer").startup({
     use( --parenteses coloridos
       "p00f/nvim-ts-rainbow"
     )
-    use({ -- realçar pesquisa
+    use({ -- realçar argumentos da função
       "m-demare/hlargs.nvim",
       requires = { "nvim-treesitter/nvim-treesitter" },
     })
@@ -73,12 +70,6 @@ return require("packer").startup({
     use({ -- simbolos no menu
       "onsails/lspkind-nvim",
     })
-    use({ -- nem to usando
-      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-      config = function()
-        require("plugins/lsp_lines_config")
-      end,
-    })
     use({ -- mover itens selecionados
       "booperlv/nvim-gomove",
       config = function()
@@ -86,18 +77,13 @@ return require("packer").startup({
       end,
     })
 
-    use({ -- configurar depois
+    use({ -- realçar itens pesquisados
       "kevinhwang91/nvim-hlslens",
       config = function()
         require("hlslens").setup()
       end,
     })
-    use({ --configurar depois
-      "petertriho/nvim-scrollbar",
-      config = function()
-        require("scrollbar").setup()
-      end,
-    })
+    
     use({ -- mostrar metodos enquanto escreve
       "ray-x/lsp_signature.nvim",
       config = function()
@@ -142,12 +128,6 @@ return require("packer").startup({
       "b3nj5m1n/kommentary",
       config = function()
         require("plugins/kommentary_config")
-      end,
-    })
-    use({ -- nem to usando
-      "ahmedkhalf/project.nvim",
-      config = function()
-        require("project_nvim").setup({})
       end,
     })
     use({ -- integração telescope para procurar arquivos
@@ -203,7 +183,7 @@ return require("packer").startup({
         require("plugins/debugando")
       end,
     })
-    use({ --escurecer bloco não atual, n funcionou
+    use({ --escurecer bloco não atual
       "folke/twilight.nvim",
       config = function()
         require("twilight").setup({})
@@ -230,15 +210,6 @@ return require("packer").startup({
       "folke/lsp-trouble.nvim",
       config = function()
         require("trouble").setup()
-      end,
-    })
-    use({ --explorador de arquivos
-      "kyazdani42/nvim-tree.lua",
-      requires = {
-        "kyazdani42/nvim-web-devicons",
-      },
-      config = function()
-        require("plugins/nvim-tree_config")
       end,
     })
     use({ --statusline
@@ -281,50 +252,21 @@ return require("packer").startup({
         require("plugins/rust-tools_config")
       end,
     })
-    -- ; "TimUntersberger/neogit"
     use({
       "nvim-treesitter/nvim-treesitter",
       config = function()
         require("plugins/nvim-treesitter_config")
       end,
     })
-    -- -- use({
-    -- --     -- "shift-d/crates.nvim",
-    -- --     "mhinz/vim-crates",
-    -- --     -- "Saecki/crates.nvim",
-    -- --     event = { "BufRead Cargo.toml" },
-    -- --     config = vim.cmd([[call crates#toggle()]]),
-    -- -- })
-
-    -- use({ --melhora no uso do lsp(fonte)
-    -- -- desativei porque não funciona junto de outros plugins que configura LSP
-    --   "ray-x/navigator.lua",
-    --   requires = {
-    --     { "nvim-treesitter/nvim-treesitter" },
-    --     { "neovim/nvim-lspconfig" },
-    --     { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
-    --   },
-    --   config = function()
-    --     require("plugins/navigator_config")
-    --   end,
-    -- })
-    use({ -- melhorar interação com LSP
+     use({ -- melhorar interação com LSP
       "tami5/lspsaga.nvim",
       branch = "nvim6.0",
       config = function()
-        require("plugins/lspsaga_config")
+        require("lspsaga").setup()
       end,
-    })
-    use({ --tabs/guias superiores, nem to usando teste
-      "akinsho/bufferline.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
-      -- config = function()
-      --   require("plugins/bufferline_config")
-      -- end,
     })
     use({
       "neovim/nvim-lspconfig",
-      -- ft = { "haskell", "fsharp", "python", "cpp" },
       config = function()
         require("plugins/lspconfig_config")
       end,
@@ -367,19 +309,17 @@ return require("packer").startup({
     use({ --mostrar cores hexa
       "norcalli/nvim-colorizer.lua",
       config = function()
-        require("colorizer").setup()
+        require("colorizer").setup({
+          css = { rgb_fn = true },
+        })
       end,
     })
-    -- use({ --estabilizar/centralizar buffet quando abre um novo
-    --   "luukvbaal/stabilize.nvim",
-    --   config = function()
-    --     require("stabilize").setup()
-    --   end,
-    -- })
-    ---impedir que apagar linha mande elas para o copiar/colar
-    -- use({
-    --     "gbprod/cutlass.nvim",
-    -- })
+    use({ --estabilizar/centralizar buffet quando abre um novo
+      "luukvbaal/stabilize.nvim",
+      config = function()
+        require("stabilize").setup()
+      end,
+    })
     if packer_bootstrap then
       require("packer").sync()
     end

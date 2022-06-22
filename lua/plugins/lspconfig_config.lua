@@ -2,11 +2,16 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
-require("lspconfig").tsserver.setup({})
-require("lspconfig").rnix.setup({ on_attach = require("lsp-format").on_attach })
+local lsp_format = require("lsp-format").on_attach
+
+require("lspconfig").tsserver.setup({
+  on_attach = lsp_format,
+  copabilities = capabilities,
+})
 
 require("lspconfig").clangd.setup({
   capabilities = capabilities,
+  on_attach = lsp_format,
   cmd = {
     "clangd",
     "--background-index",
@@ -14,11 +19,13 @@ require("lspconfig").clangd.setup({
     "--suggest-missing-includes",
     "--completion-style=detailed",
     "--header-insertion=iwyu",
+    -- "style=microsoft"
   },
 })
 
 require("lspconfig").pylsp.setup({
   -- on_attach = require("aerial").on_attach,
+  on_attach = lsp_format,
   settings = {
     pylsp = {
       filetype = { "python" },
@@ -30,6 +37,7 @@ require("lspconfig").pylsp.setup({
         pylint = { enabled = false },
         pycodestyle = { enabled = false },
         pyflakes = { enabled = false },
+        black = { enabled = true },
         -- capabilities = capabilities,
       },
     },
@@ -37,10 +45,4 @@ require("lspconfig").pylsp.setup({
 })
 
 vim.cmd([[autocmd BufNewFile,BufRead *.fs,*.fsx,*.fsi set filetype=fsharp]])
-require("lspconfig").fsautocomplete.setup({
-  on_attach = require("virtualtypes").on_attach,
-})
-
-require("lspconfig").hls.setup({
-  on_attach = require("virtualtypes").on_attach,
-})
+require("lspconfig").fsautocomplete.setup({})

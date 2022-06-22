@@ -9,7 +9,7 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 dapui.setup({
-  sidebar = {
+  layouts = {
     -- You can change the order of elements in the sidebar
     elements = {
       -- Provide as ID strings or tables with "id" and "size" keys

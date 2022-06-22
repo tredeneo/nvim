@@ -25,6 +25,13 @@ vim.wo.{option}: window-local options
 --cursor:normal-inserir-visual-comando=linha verical,substituir=linha horizontal
 vim.o.guicursor = "n-i-v-c:ver100-blinkon1,r:hor100-blinkon0"
 
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+})
 ---numeros relativos
 vim.wo.number = true
 vim.wo.relativenumber = true
