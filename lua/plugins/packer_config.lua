@@ -1,17 +1,25 @@
-local fn = vim.fn 
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim" 
-if fn.empty(fn.glob(install_path)) > 0 then 
-	packer_bootstrap = fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path, }) 
-end 
-vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]]) 
+local fn = vim.fn
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "https://github.com/wbthomason/packer.nvim",
+    install_path,
+  })
+end
+vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
---gerenciador vim.cmd 'packadd paq-nvim' 
-return require("packer").startup({ function() 
-
-	use({ -- melhorar velocidade de inicialização com JIT
-	"lewis6991/impatient.nvim", }) 
-	use("tpope/vim-surround") 
-	use("alvan/vim-closetag") 
+--gerenciador vim.cmd 'packadd paq-nvim'
+return require("packer").startup({
+  function()
+    use({ -- melhorar velocidade de inicialização com JIT
+      "lewis6991/impatient.nvim",
+    })
+    use("tpope/vim-surround")
+    use("alvan/vim-closetag")
 
     use({ --arvore de arquivos
       "nvim-neo-tree/neo-tree.nvim",
@@ -22,14 +30,14 @@ return require("packer").startup({ function()
         "MunifTanjim/nui.nvim",
       },
     })
-    use{
+    use({
       "lukas-reineke/lsp-format.nvim",
       config = function()
         require("plugins/lsp-format_config")
       end,
-    }
+    })
     use({ -- carregamento do LSP
-    "j-hui/fidget.nvim",
+      "j-hui/fidget.nvim",
       config = function()
         require("fidget").setup()
       end,
@@ -83,7 +91,7 @@ return require("packer").startup({ function()
         require("hlslens").setup()
       end,
     })
-    
+
     use({ -- mostrar metodos enquanto escreve
       "ray-x/lsp_signature.nvim",
       config = function()
@@ -258,11 +266,20 @@ return require("packer").startup({ function()
         require("plugins/nvim-treesitter_config")
       end,
     })
-     use({ -- melhorar interação com LSP
-      "tami5/lspsaga.nvim",
+    use({
+      "kkharji/lspsaga.nvim",
       branch = "nvim6.0",
+    })
+    use({
+      "gbprod/cutlass.nvim",
       config = function()
-        require("lspsaga").setup()
+        require("cutlass").setup()
+      end,
+    })
+    use({
+      "nmac427/guess-indent.nvim",
+      config = function()
+        require("guess-indent").setup()
       end,
     })
     use({

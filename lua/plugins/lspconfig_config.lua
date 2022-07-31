@@ -29,7 +29,6 @@ require("lspconfig").pylsp.setup({
   settings = {
     pylsp = {
       filetype = { "python" },
-      configurationSources = { "flake8" },
       plugins = {
         flake8 = { enabled = true, maxLineLength = 88, ignore = { "F811" } },
         jedi = { enabled = true },
@@ -37,12 +36,10 @@ require("lspconfig").pylsp.setup({
         pylint = { enabled = false },
         pycodestyle = { enabled = false },
         pyflakes = { enabled = false },
-        black = { enabled = true },
         -- capabilities = capabilities,
       },
     },
   },
 })
-
-vim.cmd([[autocmd BufNewFile,BufRead *.fs,*.fsx,*.fsi set filetype=fsharp]])
-require("lspconfig").fsautocomplete.setup({})
+-- require("lspconfig").pyre.setup({})
+require("lspconfig").pyright.setup({})
